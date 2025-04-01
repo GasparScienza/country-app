@@ -1,1 +1,14 @@
-<p>country-page works!</p>,
+@if (countryResource.error()) {
+<section class="flex flex-col items-center justify-center mt-10">
+  <h1>No se encontro el país</h1>
+  <a (click)="goBack()" class="link-primary">Regresar</a>
+</section>
+}
+<!--  -->
+@if (countryResource.isLoading()) {
+<h1 class="text-3xl">Cargando...</h1>
+}
+<!--  -->
+@if (countryResource.hasValue()) {
+<app-country-information [country]="countryResource.value()" />
+}
