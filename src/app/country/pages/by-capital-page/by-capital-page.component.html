@@ -1,6 +1,7 @@
 <app-search-input
   (txtSearch)="query.set($event)"
   txtPlaceHolder="Buscar por capital"
+  [initialValue]="query()"
 />
 
 <app-country-list

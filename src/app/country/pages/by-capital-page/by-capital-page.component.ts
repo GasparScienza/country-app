@@ -1,10 +1,10 @@
 import { CountryService } from './../../services/country.service';
-import { Component, inject, resource, signal } from '@angular/core';
+import { Component, inject, linkedSignal, signal } from '@angular/core';
 import { SearchInputComponent } from '../../components/search-input/search-input.component';
 import { CountryListComponent } from '../../components/country-list/country-list.component';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { Country } from '../../interfaces/country.interfaces';
-import { firstValueFrom, of } from 'rxjs';
+import { of } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-by-capital-page',
@@ -13,12 +13,23 @@ import { firstValueFrom, of } from 'rxjs';
 })
 export class ByCapitalPageComponent {
   private countryService = inject(CountryService);
-  query = signal('');
+
+  activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
+
+  queryParam = this.activatedRoute.snapshot.queryParamMap.get('query') ?? '';
+
+  query = linkedSignal(() => this.queryParam);
 
   countryResource = rxResource({
     request: () => ({ query: this.query() }),
     loader: ({ request }) => {
       if (!request.query) return of([]); //Funcion que devuelve un observable con un arreglo vacio
+      this.router.navigate(['/country/by-capital'], {
+        queryParams: {
+          query: request.query,
+        },
+      });
       return this.countryService.searchCapital(request.query);
     },
   });

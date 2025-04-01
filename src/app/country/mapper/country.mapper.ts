@@ -4,7 +4,7 @@ import type { CountryResponse } from '../interfaces/ctr.interfaces';
 export class CountryMapper {
   static mapCtrToCountry(item: CountryResponse): Country {
     return {
-      capital: item.capital.join(', '),
+      capital: item.capital?.join(', '),
       name: item.translations['spa'].common,
       population: item.population,
       flag: item.flag,

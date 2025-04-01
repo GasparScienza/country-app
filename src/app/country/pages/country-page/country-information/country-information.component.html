@@ -1,6 +1,16 @@
-<section class="mx-10">
-  <h1 class="text-3xl">Nombre: {{ country().name }}</h1>
-  <h2 class="text-xl font-thin">
-    Poblacion: {{ country().population | number }}
-  </h2>
+<section
+  class="mx-10 flex sm:flex-col text-center justify-center items-center gap-5"
+>
+  <section class="flex flex-col border-2 w-auto rounded-2xl p-7 gap-5">
+    <h1 class="text-7xl">{{ country().name }}</h1>
+    <h2 class="text-2xl font-thin">
+      Poblacion: {{ country().population | number }}
+    </h2>
+  </section>
+
+  <img
+    class="w-[700px] mb-10"
+    [src]="country().flags.svg"
+    [alt]="country().flags.alt"
+  />
 </section>
